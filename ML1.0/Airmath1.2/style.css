@@ -1,0 +1,290 @@
+:root {
+    --bg-color: #0f172a;
+    --card-bg: rgba(30, 41, 59, 0.7);
+    --primary: #8b5cf6;
+    --accent: #06b6d4;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --success: #10b981;
+    --danger: #ef4444;
+    --font-heading: 'Outfit', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-color);
+    background-image:
+        radial-gradient(circle at 10% 20%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 90% 80%, rgba(6, 182, 212, 0.15) 0%, transparent 50%);
+    color: var(--text-main);
+    font-family: var(--font-heading);
+    height: 100vh;
+    overflow: hidden;
+    /* Prevent scroll on gesture drags */
+    display: flex;
+    flex-direction: column;
+}
+
+.app-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 1rem;
+    gap: 1rem;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    background: linear-gradient(to right, var(--primary), var(--accent));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.status-pill {
+    font-size: 0.85rem;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+main {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 1.5rem;
+    min-height: 0;
+    /* Fix flex overflow */
+}
+
+/* LEFT PANEL */
+.visual-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    position: relative;
+}
+
+.canvas-wrapper {
+    flex: 1;
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #000;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+#webcam {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scaleX(-1);
+    /* Mirror */
+    opacity: 0.4;
+    /* Slightly dim webcam so white text pops */
+}
+
+#drawing-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: scaleX(-1);
+    /* Mirror canvas too to match webcam */
+    z-index: 10;
+}
+
+.overlay-ui {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    z-index: 20;
+    pointer-events: none;
+}
+
+.mode-indicator,
+.depth-indicator {
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    border-left: 3px solid var(--text-muted);
+}
+
+.dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--text-muted);
+    margin-right: 6px;
+}
+
+/* Status Colors */
+.status-draw .mode-indicator {
+    border-color: var(--success);
+}
+
+.status-draw .dot {
+    background: var(--success);
+    box-shadow: 0 0 8px var(--success);
+}
+
+.status-erase .mode-indicator {
+    border-color: var(--danger);
+}
+
+.status-erase .dot {
+    background: var(--danger);
+}
+
+.status-pause .mode-indicator {
+    border-color: var(--accent);
+}
+
+.controls {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+}
+
+.btn {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: var(--font-heading);
+}
+
+.btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.btn.primary {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+}
+
+.btn.primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(139, 92, 246, 0.5);
+}
+
+/* RIGHT PANEL */
+.result-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+.card {
+    background: var(--card-bg);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: 1.2rem;
+    backdrop-filter: blur(10px);
+}
+
+.card h3 {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    margin-bottom: 0.8rem;
+}
+
+.math-display {
+    font-family: var(--font-mono);
+    font-size: 1.2rem;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 1rem;
+    border-radius: 8px;
+    min-height: 3.5rem;
+    display: flex;
+    align-items: center;
+    word-break: break-all;
+}
+
+.math-display.highlight {
+    color: var(--accent);
+    font-size: 1.5rem;
+    font-weight: 700;
+    border: 1px solid rgba(6, 182, 212, 0.3);
+}
+
+.explanation-box {
+    margin-top: 1rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #e2e8f0;
+}
+
+.hint-text {
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+.graph-card {
+    flex: 1;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+}
+
+#graph-container {
+    flex: 1;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+    main {
+        grid-template-columns: 1fr;
+    }
+
+    .canvas-wrapper {
+        min-height: 50vh;
+    }
+}

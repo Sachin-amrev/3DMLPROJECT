@@ -1,0 +1,338 @@
+:root {
+    --bg-color: #0f172a;
+    --card-bg: rgba(30, 41, 59, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --accent-color: #3b82f6;
+    /* Blue-500 */
+    --accent-glow: rgba(59, 130, 246, 0.5);
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --success-color: #10b981;
+    --danger-color: #ef4444;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Outfit', sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    overflow: hidden;
+    /* Prevent scrolling */
+    height: 100vh;
+    width: 100vw;
+}
+
+/* --- Loader --- */
+#loading-screen {
+    position: fixed;
+    inset: 0;
+    background: var(--bg-color);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    transition: opacity 0.5s ease;
+}
+
+.loader-content {
+    text-align: center;
+}
+
+.loader-content h2 {
+    margin-top: 20px;
+    font-weight: 500;
+}
+
+.loader-content p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+/* Simple Cube Loader animation */
+.cube-loader {
+    width: 40px;
+    height: 40px;
+    position: relative;
+    margin: 0 auto;
+    animation: rotate 1.5s infinite linear;
+}
+
+.cube {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background: var(--accent-color);
+    box-shadow: 0 0 10px var(--accent-glow);
+}
+
+.cube1 {
+    top: 0;
+    left: 0;
+}
+
+.cube2 {
+    top: 0;
+    right: 0;
+}
+
+.cube3 {
+    bottom: 0;
+    right: 0;
+}
+
+.cube4 {
+    bottom: 0;
+    left: 0;
+}
+
+@keyframes rotate {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* --- App Layout --- */
+.app-container {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+}
+
+/* Left Panel: Drawing Area */
+.drawing-area {
+    flex: 1;
+    /* Takes remaining space */
+    position: relative;
+    background: #000;
+    /* Good contrast for drawing */
+    overflow: hidden;
+}
+
+.camera-wrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+/* Video and Canvas stack on top of each other */
+#webcam {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scaleX(-1);
+    /* Mirror effect */
+    opacity: 0.6;
+    /* Dim video slightly so drawing pops */
+}
+
+#output_canvas {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 10;
+}
+
+/* Overlay Controls on Video */
+.overlay-controls {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    gap: 10px;
+    z-index: 20;
+}
+
+.status-badge,
+.mode-badge {
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    border: 1px solid var(--glass-border);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.mode-badge .dot {
+    width: 8px;
+    height: 8px;
+    background: var(--success-color);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--success-color);
+}
+
+.floating-toolbar {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 20;
+}
+
+.glass-btn {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    color: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: grid;
+    place-items: center;
+    font-size: 1.2rem;
+}
+
+.glass-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+}
+
+/* Right Panel: Results */
+.results-panel {
+    width: 400px;
+    min-width: 350px;
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+    border-left: 1px solid var(--glass-border);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    overflow-y: auto;
+    z-index: 50;
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+}
+
+header h1 {
+    font-size: 1.8rem;
+    letter-spacing: -1px;
+    background: linear-gradient(to right, #fff, #94a3b8);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+header p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+/* Cards */
+.glass-card {
+    background: var(--card-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    transition: transform 0.2s;
+}
+
+.highlight-card {
+    background: rgba(59, 130, 246, 0.15);
+    border-color: rgba(59, 130, 246, 0.3);
+}
+
+.card-header {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 12px 16px;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-secondary);
+    font-weight: 700;
+}
+
+.card-content {
+    padding: 16px;
+}
+
+.math-display {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.2rem;
+    word-break: break-all;
+    min-height: 1.5em;
+}
+
+.solution-text {
+    font-size: 1.5rem;
+    color: var(--accent-color);
+    font-weight: 700;
+}
+
+/* Graph Area */
+.chart-container {
+    flex: 1;
+    min-height: 250px;
+    display: flex;
+    flex-direction: column;
+}
+
+#plot-area {
+    width: 100%;
+    height: 100%;
+    /* Plotly often inserts white bg, handled in JS layout */
+}
+
+/* Instructions */
+.instructions {
+    font-size: 0.85rem;
+    padding: 16px;
+}
+
+.instructions h3 {
+    margin-bottom: 10px;
+    color: var(--text-secondary);
+}
+
+.instructions ul {
+    list-style: none;
+    padding-left: 5px;
+}
+
+.instructions li {
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-secondary);
+}
+
+.instructions i {
+    width: 20px;
+    text-align: center;
+    color: var(--accent-color);
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .app-container {
+        flex-direction: column;
+    }
+
+    .drawing-area {
+        height: 60vh;
+        flex: none;
+    }
+
+    .results-panel {
+        width: 100%;
+        height: 40vh;
+        border-left: none;
+        border-top: 1px solid var(--glass-border);
+    }
+}

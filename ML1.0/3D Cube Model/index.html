@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spatial AR Cube</title>
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Three.js (ES Modules) -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+
+    <!-- MediaPipe Hands (Global Script) -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <!-- UI Overlay -->
+    <div id="ui-layer">
+        <div id="status">Waiting for camera...</div>
+        <div id="instructions">
+            Pinch (Thumb + Index) to grab the cube.<br>
+            Move to drag. Horizontal move rotates.<br>
+            Move closer/further to scale.
+        </div>
+        <div id="pinch-indicator" class="hidden">PINCH ACTIVE</div>
+        <div id="fingertip-cursor" class="hidden"></div>
+    </div>
+
+    <!-- Video Element (Hidden from view, used for processing) -->
+    <video id="input-video" playsinline></video>
+
+    <!-- Canvas for Three.js (Background) -->
+    <canvas id="output-canvas"></canvas>
+
+    <!-- Main Logic -->
+    <script type="module" src="script.js"></script>
+</body>
+
+</html>

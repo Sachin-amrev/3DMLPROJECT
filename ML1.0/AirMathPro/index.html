@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Air Math Pro</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- MathJS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/12.4.0/math.js"></script>
+    <!-- Plotly -->
+    <script src="https://cdn.plot.ly/plotly-2.29.1.min.js"></script>
+    <!-- Tesseract.js -->
+    <script src='https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js'></script>
+    <!-- MediaPipe -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision/vision_bundle.js" crossorigin="anonymous"></script>
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app-container">
+    <!-- Left Panel: Camera & Canvas -->
+    <div class="canvas-container">
+        <video id="webcam" autoplay playsinline></video>
+        <canvas id="output_canvas"></canvas>
+        <div class="overlay-controls">
+            <div id="gesture_status" class="status-badge">Waiting for hand...</div>
+            <div class="action-buttons">
+                <button id="clearBtn" class="glass-btn">🗑️ Clear</button>
+                <button id="recognizeBtn" class="glass-btn">⚡ Recognize</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Right Panel: Results & Graph -->
+    <div class="results-panel">
+        <div class="header">
+            <h1>Air Math Pro</h1>
+            <p>Write math in the air!</p>
+        </div>
+
+        <div class="result-card">
+            <h3>Recognized Expression</h3>
+            <div id="math_output" class="math-display">...</div>
+        </div>
+
+        <div class="result-card">
+            <h3>Explanation (Hinglish)</h3>
+            <div id="explanation_output" class="explanation-text">...</div>
+        </div>
+
+        <div class="result-card graph-card">
+            <h3>Graph</h3>
+            <div id="graph_container"></div>
+        </div>
+    </div>
+    <!-- Debug Log -->
+    <div id="debug_log" style="position: fixed; bottom: 10px; right: 10px; width: 300px; max-height: 200px; overflow-y: auto; background: rgba(0,0,0,0.8); color: lime; font-family: monospace; font-size: 10px; padding: 10px; border-radius: 5px; z-index: 1000; pointer-events: none;">
+        <div>Debug Log Init...</div>
+    </div>
+</div>
+
+<!-- Load Script as Module -->
+<script type="module" src="script.js"></script>
+
+</body>
+</html>

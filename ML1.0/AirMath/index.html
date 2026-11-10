@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AirMath - Air Gesture Math Solver</title>
+    
+    <!-- Design & Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Dependencies -->
+    <!-- MediaPipe Hands -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+
+    <!-- Math & Graphing -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.24.1.min.js"></script>
+
+    <!-- OCR -->
+    <script src='https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js'></script>
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- Left: Drawing Canvas & Camera -->
+        <div class="canvas-section">
+            <div class="canvas-wrapper">
+                <video id="input_video" style="display: none;"></video>
+                <canvas id="output_canvas"></canvas> <!-- For MediaPipe overlay & Drawing -->
+                <div class="status-pill" id="status_pill">Loading Core...</div>
+                <div class="instruction-overlay" id="instruction">
+                    <div class="icon">👆</div>
+                    <p>Raise index finger to draw<br>Close hand to solve</p>
+                </div>
+            </div>
+            <div class="controls">
+                <button class="btn btn-secondary" id="clear_btn">
+                    <span class="icon">↺</span> Clear Canvas
+                </button>
+                <button class="btn btn-secondary" id="toggle_cam_btn">
+                    <span class="icon">📷</span> Toggle Camera
+                </button>
+            </div>
+        </div>
+
+        <!-- Right: Solution Panel -->
+        <div class="results-section">
+            <header>
+                <div class="logo">AirMath <span class="beta">AI</span></div>
+            </header>
+
+            <div class="content-scroll">
+                <!-- Recognition Block -->
+                <div class="result-card">
+                    <div class="card-label">Detected Equation</div>
+                    <div class="equation-display" id="equation_display">
+                        <span class="placeholder">Draw something...</span>
+                    </div>
+                </div>
+
+                <!-- Solution Block -->
+                <div class="result-card">
+                    <div class="card-label">Solution</div>
+                    <div class="solution-steps" id="solution_display">
+                        <!-- Steps will be injected here -->
+                    </div>
+                </div>
+
+                <!-- Graph Block -->
+                <div class="result-card">
+                    <div class="card-label">Graph</div>
+                    <div id="graph_container" class="graph-box"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+</body>
+</html>

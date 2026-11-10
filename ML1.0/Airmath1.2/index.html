@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Air Math - Gesture Math Solver</title>
+    <link rel="stylesheet" href="style.css">
+
+    <!-- CDNs -->
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.24.1.min.js"></script>
+
+    <!-- Nerdamer (Symbolic Math) -->
+    <script src="https://cdn.jsdelivr.net/npm/nerdamer@1.1.26/nerdamer.core.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/nerdamer@1.1.26/Algebra.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/nerdamer@1.1.26/Calculus.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/nerdamer@1.1.26/Solve.js"></script>
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="app-container">
+        <!-- HEADER -->
+        <header>
+            <div class="logo">✨ Air Math</div>
+            <div class="status-pill" id="system-status">Initialize...</div>
+        </header>
+
+        <!-- MAIN LAYOUT -->
+        <main>
+            <!-- LEFT PANEL: CANVAS & CAMERA -->
+            <section class="visual-panel">
+                <div class="canvas-wrapper">
+                    <video id="webcam" autoplay playsinline muted></video>
+                    <canvas id="drawing-canvas"></canvas>
+
+                    <!-- Overlay Indicators -->
+                    <div class="overlay-ui">
+                        <div class="mode-indicator" id="mode-indicator">
+                            <span class="dot"></span> <span id="mode-text">Loading Model...</span>
+                        </div>
+                        <div class="depth-indicator" id="depth-indicator">
+                            Depth: <span id="depth-val">--</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="controls">
+                    <button class="btn" id="btn-clear">🧹 Clear</button>
+                    <button class="btn primary" id="btn-recognize">⚡ Solve</button>
+                </div>
+            </section>
+
+            <!-- RIGHT PANEL: RESULTS -->
+            <section class="result-panel">
+
+                <div class="card result-card">
+                    <h3>Recognized Expression</h3>
+                    <div class="math-display" id="math-expression">...</div>
+                </div>
+
+                <div class="card answer-card">
+                    <h3>Final Answer</h3>
+                    <div class="math-display highlight" id="math-answer">...</div>
+                    <div class="explanation-box" id="explanation-box">
+                        <p class="hint-text">Steps will appear here in simple Hinglish...</p>
+                    </div>
+                </div>
+
+                <div class="card graph-card">
+                    <h3>Graph</h3>
+                    <div id="graph-container"></div>
+                </div>
+
+            </section>
+        </main>
+    </div>
+
+    <!-- MODULE SCRIPT -->
+    <script type="module" src="script.js"></script>
+
+</body>
+
+</html>

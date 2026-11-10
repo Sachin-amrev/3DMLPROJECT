@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Air Math - Gesture Recognition Solver</title>
+    <link rel="manifest" href="manifest.json">
+
+    <!-- Design Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Dependencies (CDNs) -->
+
+
+    <!-- Math.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.js"></script>
+
+    <!-- Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-2.24.1.min.js"></script>
+
+    <!-- Tesseract.js -->
+    <script src='https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js'></script>
+
+    <!-- Nerdamer (Algebra & Calculus) -->
+    <script src="https://cdn.jsdelivr.net/npm/nerdamer@1.1.13/nerdamer.core.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/nerdamer@1.1.13/Algebra.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/nerdamer@1.1.13/Calculus.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/nerdamer@1.1.13/Solve.js"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="loader-content">
+            <div class="cube-loader">
+                <div class="cube cube1"></div>
+                <div class="cube cube2"></div>
+                <div class="cube cube3"></div>
+                <div class="cube cube4"></div>
+            </div>
+            <h2>Initializing Air Math...</h2>
+            <p>Loading AI Models & Engine</p>
+        </div>
+    </div>
+
+    <div class="app-container">
+
+        <!-- Left Panel: Camera & Canvas -->
+        <div class="drawing-area">
+            <div class="camera-wrapper">
+                <video id="webcam" autoplay playsinline muted></video>
+                <canvas id="output_canvas"></canvas>
+            </div>
+
+            <div class="overlay-controls">
+                <div class="status-badge" id="hand-status">
+                    <i class="fa-solid fa-hand"></i> No Hand
+                </div>
+                <div class="mode-badge">
+                    <span class="dot"></span> Live Mode
+                </div>
+            </div>
+
+            <div class="floating-toolbar">
+                <button id="clear-btn" class="glass-btn" title="Clear Canvas">
+                    <i class="fa-solid fa-trash-can"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Right Panel: Results & Graph -->
+        <div class="results-panel">
+            <header>
+                <h1><i class="fa-solid fa-infinity"></i> Air Math</h1>
+                <p>Gestural Math Solver</p>
+            </header>
+
+            <div class="result-card glass-card">
+                <div class="card-header">
+                    <span><i class="fa-solid fa-pen-nib"></i> Recognized Text</span>
+                </div>
+                <div class="card-content">
+                    <div id="ocr-result" class="math-display">Waiting for input...</div>
+                </div>
+            </div>
+
+            <div class="result-card glass-card highlight-card">
+                <div class="card-header">
+                    <span><i class="fa-solid fa-equals"></i> Solution</span>
+                </div>
+                <div class="card-content">
+                    <div id="math-solution" class="math-display solution-text">---</div>
+                </div>
+            </div>
+
+            <div class="chart-container glass-card">
+                <div class="card-header">
+                    <span><i class="fa-solid fa-chart-line"></i> Graph</span>
+                </div>
+                <div id="plot-area"></div>
+            </div>
+
+            <div class="instructions glass-card">
+                <h3>Capabilities</h3>
+                <ul>
+                    <li><i class="fa-solid fa-plus-minus"></i> <b>Arithmetic:</b> 2+2, 5*5, 10/2</li>
+                    <li><i class="fa-solid fa-square-root-variable"></i> <b>Algebra:</b> 2x=10, x^2+5</li>
+                    <li><i class="fa-solid fa-wave-square"></i> <b>Functions:</b> sin(x), log(x)</li>
+                    <li><i class="fa-solid fa-calculator"></i> <b>Calculus:</b> d/dx(x^2), int(x)</li>
+                </ul>
+                <h3 style="margin-top: 15px;">How to use</h3>
+                <ul>
+                    <li><i class="fa-solid fa-hand-pointer"></i> <b>Draw:</b> Index Finger (Open)</li>
+                    <li><i class="fa-regular fa-hand-rock"></i> <b>Solve:</b> Fist (Hold 1s)</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js" type="module"></script>
+</body>
+
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hand Tracking 3D Interaction</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Three.js -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/",
+                "@mediapipe/tasks-vision": "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3"
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="ui-layer">
+        <h1>Hand Tracking 3D</h1>
+        <div id="status">Initializing...</div>
+        <div id="instructions">
+            <p>🖐️ <b>Move Hand</b> to move cursor</p>
+            <p>🤏 <b>Pinch (Thumb+Index)</b> to grab & move object</p>
+            <p>🔄 <b>Rotate Wrist</b> to rotate object</p>
+        </div>
+        <div id="debug-container">
+            <video id="webcam" autoplay playsinline></video>
+            <canvas id="output_canvas"></canvas>
+        </div>
+    </div>
+    <div id="canvas-container"></div>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>
